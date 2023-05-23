@@ -1,0 +1,24 @@
+description: PWM controlled motor driver
+
+compatible: "encode_motor"
+
+properties:
+  pwms:
+    type: phandle-array
+    required: true
+    description: |
+      The PWM channels connected to the gate driver for the MOSFET.
+  pwm-names:
+    type: string-array
+    required: true
+    description: |
+      The names of the PWM channels connected to the gate driver for the MOSFET.
+  gpios:
+    type: phandle-array
+    required: true
+    description: |
+      The encoder channels connected to the motor.
+  label:
+    type: string
+    description: |
+      A label for the motor driver.
