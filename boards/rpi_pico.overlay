@@ -66,7 +66,7 @@
 	status = "okay";
 	pinctrl-0 = <&i2c_sensor>;
 	pinctrl-names = "default";
-	clock-frequency = <I2C_BITRATE_FAST>;
+	clock-frequency = <I2C_BITRATE_STANDARD>;
     lightsensor: lightsensor@4c {
         compatible = "light_sensor";
         reg=<0x4c>;
@@ -89,8 +89,9 @@
         group1 {
             pinmux = <I2C0_SDA_P20>, <I2C0_SCL_P21>;
             input-enable;
-            input-schmitt-enable;
             bias-pull-up;
+            slew-rate = <1>;
+            // input-schmitt-enable;
         };
     };
 };
