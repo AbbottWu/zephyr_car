@@ -22,7 +22,9 @@ public:
     Sensor_Status analogs_read_to_buffer();
     // Sensor_Status digital_continous_set();
     // Sensor_Status digital_continous_read();
-    // Sensor_Status analogs_continous_set();
-    // Sensor_Status analogs_continous_read();
-
+    Sensor_Status analogs_continous_set();
+    Sensor_Status analogs_continous_read();
 };
+
+// k_tid_t sensor_task_init(void);
+void sensor_task(void*,void*,void*);

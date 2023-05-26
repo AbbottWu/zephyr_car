@@ -25,7 +25,7 @@ public:
     static void encoder1_isr(const struct device *dev, gpio_callback *cb, gpio_port_pins_t pins);
 };
 
-k_tid_t motor_task_init(void);
+void motor_task(void *, void *, void *);
 
 struct motor_speed
 {
