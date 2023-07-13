@@ -1,11 +1,12 @@
+#include <stdlib.h>
+#include <zephyr/drivers/i2c.h>
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
-#include <zephyr/drivers/i2c.h>
 #include <zephyr/sys/ring_buffer.h>
+
+#include "Light_sensor.h"
+#include "Motor.h"
 #include "MiniPID.h"
-#include <stdlib.h>
-#include "motor.h"
-#include "light_sensor.h"
 LOG_MODULE_REGISTER(main, CONFIG_LOG_DEFAULT_LEVEL);
 #define I2CSENSOR DT_ALIAS(lightsensor)
 
@@ -23,8 +24,8 @@ void controller(void *, void *, void *)
         if (!ring_buf_is_empty(&sensor_ring_buf))
         {
             uint32_t size = ring_buf_size_get(&sensor_ring_buf) / 8;
-            
-            if(size % 8 == 0)
+
+            if (size % 8 == 0)
             {
                 while (size > 1)
                 {
@@ -64,10 +65,8 @@ static k_thread main_thread_data;
 int main(void)
 {
     k_thread_create(&sensor_thread_data, sensor_stack_area,
-                    K_THREAD_STACK_SIZEOF(sensor_stack_area),
-                    sensor_task,
-                    NULL, NULL, NULL,
-                    SENSOR_PRIORITY, 0, K_NO_WAIT);
+                    K_THREAD_STACK_SIZEOF(sensor_stack_area), sensor_task, NULL,
+                    NULL, NULL, SENSOR_PRIORITY, 0, K_NO_WAIT);
     // k_thread_create(&motor_thread_data, motor_stack_area,
     //                 K_THREAD_STACK_SIZEOF(motor_stack_area),
     //                 motor_task,

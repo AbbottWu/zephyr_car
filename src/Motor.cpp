@@ -1,4 +1,4 @@
-#include "motor.h"
+#include "Motor.h"
 #include "MiniPID.h"
 #include <zephyr/logging/log.h>
 #include <zephyr/kernel/thread.h>
@@ -9,7 +9,7 @@ LOG_MODULE_REGISTER(motor, CONFIG_LOG_DEFAULT_LEVEL);
 #define MOTOR2 DT_PATH(motor_drivers, motor_2)
 #define MOTOR3 DT_PATH(motor_drivers, motor_3)
 
-K_MSGQ_DEFINE(my_msgq, sizeof(motor_speed), 1, 4);
+K_MSGQ_DEFINE(my_msgq, sizeof(Motor_Speed), 1, 4);
 
 Motor::Motor(const char *_name, const pwm_dt_spec *_port_0, const pwm_dt_spec *_port_1, const gpio_dt_spec *_encoder_0, const gpio_dt_spec *_encoder_1)
 {
@@ -163,7 +163,7 @@ extern void motor_task(void *, void *, void *)
         {
             pos[i] = motors[i].pos;
         }
-        motor_speed data;
+        Motor_Speed data;
         int ret = k_msgq_get(&my_msgq, &data, K_NO_WAIT);
         if (ret == 0)
         {
@@ -191,7 +191,7 @@ extern void motor_task(void *, void *, void *)
 
 void set_speed(int speed0, int speed1, int speed2, int speed3)
 {
-    motor_speed speed_msg;
+    Motor_Speed speed_msg;
     speed_msg.speed0 = speed0;
     speed_msg.speed1 = speed1;
     speed_msg.speed2 = speed2;

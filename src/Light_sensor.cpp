@@ -1,4 +1,4 @@
-#include "light_sensor.h"
+#include "Light_sensor.h"
 #include <zephyr/logging/log.h>
 #include <zephyr/kernel/thread.h>
 #include <zephyr/sys/ring_buffer.h>
@@ -182,7 +182,7 @@ extern void sensor_task(void *, void *, void *)
     const i2c_dt_spec lightsensor = I2C_DT_SPEC_GET(I2CSENSOR);
     LightSensor sensor(&lightsensor);
     // make a ping tile ok
-    int ret = -5;
+    // int ret = -5;
     // do
     // {
     //     ret = sensor.i2c_ping();

@@ -50,6 +50,22 @@
 		};
 	};
 
+    softi2c: softi2c {
+        #address-cells=<1>;
+        #size-cells=<0>;
+        compatible = "gpio-i2c";
+        sda-gpios = <&gpio0 18 GPIO_ACTIVE_HIGH>;
+        scl-gpios = <&gpio0 19 GPIO_ACTIVE_HIGH>;
+        clock-frequency = <100000>;
+        status = "okay";
+        lightsensor: lightsensor@4c {
+            compatible = "light_sensor";
+            reg=<0x4c>;
+            label="lightsensor";
+            status="okay";
+        };
+    };
+
 	zephyr,user{
 		status="okay";
 	};
@@ -67,12 +83,6 @@
 	pinctrl-0 = <&i2c_sensor>;
 	pinctrl-names = "default";
 	clock-frequency = <I2C_BITRATE_STANDARD>;
-    lightsensor: lightsensor@4c {
-        compatible = "light_sensor";
-        reg=<0x4c>;
-        label="lightsensor";
-        status="okay";
-    };
 };
 
 
@@ -90,8 +100,8 @@
             pinmux = <I2C0_SDA_P20>, <I2C0_SCL_P21>;
             input-enable;
             bias-pull-up;
-            slew-rate = <1>;
-            // input-schmitt-enable;
+            slew-rate = <0>;
+            input-schmitt-enable;
         };
     };
 };

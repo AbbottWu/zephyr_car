@@ -1,6 +1,11 @@
 #ifndef MINIPID_H
 #define MINIPID_H
 
+/**
+ * \~chinese @brief PID控制算法，对相关注释进行翻译
+ * 
+ * @see https://github.com/tekdemo/MiniPID
+ */
 class MiniPID{
 public:
 	MiniPID(double, double, double);
