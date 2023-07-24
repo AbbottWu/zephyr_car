@@ -9,5 +9,5 @@
  *
  */
 #pragma once
-#include <zephyr/kernel.h>
-#include <zephyr/drivers/gpio.h>
+
+void ccd_task(void *, void *, void *);

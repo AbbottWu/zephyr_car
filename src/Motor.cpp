@@ -153,7 +153,7 @@ extern void motor_task(void *, void *, void *)
     {
         pid[i].setOutputLimits(-100, 100);
     }
-    int ms_between_speed_updates = 10;
+    int ms_between_speed_updates = 100;
     int last_pos[4] = {0, 0, 0, 0};
     int pos[4] = {0, 0, 0, 0};
     int target_speed[4] = {0, 0, 0, 0};
@@ -181,9 +181,10 @@ extern void motor_task(void *, void *, void *)
             int speed = (int)(delta_pos * (1000/ms_between_speed_updates));
             pulse_per_ms[i] = speed;
             double output = pid[i].getOutput(speed, target_speed[i]);
-            motors[i].speed(output);
+            // motors[i].speed(output);
         }
         // LOG_PRINTK("%d,%d,%d,%d\n", pulse_per_ms[0], pulse_per_ms[1], pulse_per_ms[2], pulse_per_ms[3]);
+        LOG_PRINTK("%d,%d,%d,%d\n", pos[0], pos[1], pos[2], pos[3]);
         k_msleep(ms_between_speed_updates);
     }
 }

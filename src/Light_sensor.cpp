@@ -4,8 +4,8 @@
 #include <zephyr/sys/ring_buffer.h>
 
 #define I2CSENSOR DT_ALIAS(lightsensor)
-#define SENSOR_BUF_BYTES 80
-RING_BUF_DECLARE(sensor_ring_buf, SENSOR_BUF_BYTES);
+#define LIGHTSENSOR_BUF_BYTES 80
+RING_BUF_DECLARE(sensor_ring_buf, LIGHTSENSOR_BUF_BYTES);
 LOG_MODULE_REGISTER(sensor, CONFIG_LOG_DEFAULT_LEVEL);
 
 Sensor_Status LightSensor::i2c_ping()

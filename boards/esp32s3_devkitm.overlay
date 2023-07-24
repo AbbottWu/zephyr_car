@@ -11,7 +11,7 @@
             compatible = "encode_motor";
             pwms = <&ledc0 0 50000 PWM_POLARITY_NORMAL>, <&ledc0 1 50000 PWM_POLARITY_NORMAL>;
             pwm-names = "port_0", "port_1";
-            gpios = <&gpio0 15 GPIO_ACTIVE_HIGH>, <&gpio0 16 GPIO_ACTIVE_HIGH>;
+            gpios = <&gpio0 14 GPIO_ACTIVE_HIGH>, <&gpio0 13 GPIO_ACTIVE_HIGH>;
             label = "motor_0";
         };
         motor_1 {
@@ -19,7 +19,7 @@
             compatible = "encode_motor";
             pwms = <&ledc0 2 50000 PWM_POLARITY_NORMAL>, <&ledc0 3 50000 PWM_POLARITY_NORMAL>;
             pwm-names = "port_0", "port_1";
-            gpios = <&gpio0 17 GPIO_ACTIVE_HIGH>, <&gpio0 18 GPIO_ACTIVE_HIGH>;
+            gpios = <&gpio0 12 GPIO_ACTIVE_HIGH>, <&gpio0 11 GPIO_ACTIVE_HIGH>;
             label = "motor_1";
         };
         motor_2 {
@@ -27,7 +27,7 @@
             compatible = "encode_motor";
             pwms = <&ledc0 4 50000 PWM_POLARITY_NORMAL>, <&ledc0 5 50000 PWM_POLARITY_NORMAL>;
             pwm-names = "port_0", "port_1";
-            gpios = <&gpio0 19 GPIO_ACTIVE_HIGH>, <&gpio0 20 GPIO_ACTIVE_HIGH>;
+            gpios = <&gpio1 10 GPIO_ACTIVE_HIGH>, <&gpio1 9 GPIO_ACTIVE_HIGH>;
             label = "motor_2";
         };
         motor_3 {
@@ -35,9 +35,17 @@
             compatible = "encode_motor";
             pwms = <&ledc0 6 50000 PWM_POLARITY_NORMAL>, <&ledc0 7 50000 PWM_POLARITY_NORMAL>;
             pwm-names = "port_0", "port_1";
-            gpios = <&gpio1 9 GPIO_ACTIVE_HIGH>, <&gpio1 10 GPIO_ACTIVE_HIGH>;
+            gpios = <&gpio1 6 GPIO_ACTIVE_HIGH>, <&gpio0 7 GPIO_ACTIVE_HIGH>;
             label = "motor_3";
         };
+    };
+    ccd_sensor {
+        status = "okay";
+        compatible = "ccd_sensor";
+        label = "ccd_sensor";
+        io-channels = <&adc0 3>;
+        si-gpios = <&gpio0 1 GPIO_ACTIVE_HIGH>;
+        clk-gpios = <&gpio0 2 GPIO_ACTIVE_HIGH>;
     };
 };
 
@@ -84,10 +92,10 @@
 };
 
 &i2c0 {
-	status = "okay";
-	pinctrl-0 = <&i2c_sensor>;
-	pinctrl-names = "default";
-	clock-frequency = <I2C_BITRATE_FAST>;
+    status = "okay";
+    pinctrl-0 = <&i2c_sensor>;
+    pinctrl-names = "default";
+    clock-frequency = <I2C_BITRATE_FAST>;
     lightsensor: lightsensor@4c {
             compatible = "light_sensor";
             reg=<0x4c>;
@@ -99,14 +107,14 @@
 &pinctrl {
     pwm_motors: pwm_motors{
         group1 {
-            pinmux = <LEDC_CH0_GPIO7>,
-                    <LEDC_CH1_GPIO8>,
+            pinmux = <LEDC_CH0_GPIO17>,
+                    <LEDC_CH1_GPIO18>,
                     <LEDC_CH2_GPIO9>,
                     <LEDC_CH3_GPIO10>,
-                    <LEDC_CH4_GPIO11>,
-                    <LEDC_CH5_GPIO12>,
-                    <LEDC_CH6_GPIO13>,
-                    <LEDC_CH7_GPIO14>;
+                    <LEDC_CH4_GPIO47>,
+                    <LEDC_CH5_GPIO48>,
+                    <LEDC_CH6_GPIO35>,
+                    <LEDC_CH7_GPIO36>;
             output-enable;
         };
     };
@@ -117,4 +125,32 @@
             output-enable;
         };
     };
+};
+
+&adc0 {
+    status = "okay";
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    channel@3 {
+        reg = <3>;
+        zephyr,gain = "ADC_GAIN_1_4";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+        zephyr,resolution = <12>;
+        // zephyr,oversampling = <>;
+        zephyr,vref-mv = <1100>;
+    };
+};
+
+&adc1 {
+    status = "disabled";
+};
+
+&spi2 {
+    status = "disabled";
+};
+
+&spi3 {
+    status = "disabled";
 };

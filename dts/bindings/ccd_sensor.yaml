@@ -1,0 +1,24 @@
+description: ccd_sensor with adcs
+
+compatible: "ccd_sensor"
+
+properties:
+  si-gpios:
+    type: phandle-array
+    required: true
+    description: |
+      The si channel connected to the ccd sensor.
+  clk-gpios:
+    type: phandle-array
+    required: true
+    description: |
+      The clk channel connected to the ccd sensor.
+  label:
+    type: string
+    description: |
+      A label for the device.
+  io-channels:
+    type: phandle-array
+    required: true
+    description: |
+      The io channels connected to the ccd sensor analog output.

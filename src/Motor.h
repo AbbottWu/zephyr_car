@@ -14,7 +14,7 @@
 #include <zephyr/kernel.h>
 
 /**
- * \~chinese @brief 一个用于描述内置编码器的减速电机的类
+ * \~chinese @brief 编码电机类
  *
  */
 class Motor
