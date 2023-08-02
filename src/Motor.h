@@ -30,13 +30,13 @@ private:
     int encoder_his[2] = {0, 0};
     static void encoder0_isr(const struct device *dev, gpio_callback *cb, gpio_port_pins_t pins);
     static void encoder1_isr(const struct device *dev, gpio_callback *cb, gpio_port_pins_t pins);
+    long pos = 0;
 
 public:
     /**
      *  \~chinese @brief 电机角度
      *
      */
-    long pos = 0;
     /**
      * \~chinese @brief 电机类的构造函数，绑定电机控制接口（PWM）和电机编码器接口（GPIO）
      *
@@ -52,7 +52,8 @@ public:
      *
      * @param duty 电机占空比，0-100，正负代表电机转速
      */
-    void speed(int duty);
+    void speed(double duty);
+    friend void motor_task(void *, void *, void *);
 };
 
 /**
@@ -65,7 +66,7 @@ void motor_task(void *, void *, void *);
  * @brief 电机转速设定所用结构体，在消息队列中被传递
  *
  */
-struct Motor_Speed
+struct speed_msg
 {
     /**
      * @brief 电机0占空比（正负表方向）
@@ -94,3 +95,4 @@ struct Motor_Speed
  *
  */
 void set_speed(int, int, int, int);
+void set_disp_pulse(int disp);
